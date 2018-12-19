@@ -13,6 +13,7 @@ Namespace ChartStackedSorting
         ''' </summary>
         <STAThread> _
         Shared Sub Main()
+            'test
             Application.EnableVisualStyles()
             Application.SetCompatibleTextRenderingDefault(False)
             Application.Run(New Form1())
