@@ -58,7 +58,12 @@ namespace ChartStackedSorting
         }
 
         double GetTotalByArg( object arg) {
-            return chart.Series.SelectMany(s => s.ActualPoints).Where(p => Object.Equals(p.ArgumentX.QualitativeArgument, arg)).Sum(p => p.UserValues[0]);
+            double total = 0;
+            foreach(Series series in chart.Series)
+                foreach(SeriesPoint point in series.Points)
+                    if(Object.Equals(point.Argument, arg))
+                        total += point.Values[0];
+            return total;
         }
     }
 
