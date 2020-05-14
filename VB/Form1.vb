@@ -1,66 +1,58 @@
 ﻿Imports System
+Imports System.Collections
 Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
-Imports System.Text
-Imports System.Linq
 Imports System.Windows.Forms
 Imports DevExpress.XtraCharts
 
-Imports System.Collections
-
-Namespace ChartStackedSorting
+Namespace SortStackedBarsByTotalValue
 	Partial Public Class Form1
 		Inherits Form
 
+		Private Const SeriesNumber As Integer = 3
+		Private Const ArgumentNumber As Integer = 10
+
 		Public Sub New()
 			InitializeComponent()
+			chartControl1.DataSource = CreateDataSource()
+			chartControl1.SeriesDataMember = "Series"
+			Dim seriesTemplate As SeriesTemplate = chartControl1.SeriesTemplate
+			seriesTemplate.ArgumentDataMember = "Argument"
+			seriesTemplate.ValueDataMembers.AddRange("Value")
+			seriesTemplate.View = New StackedBarSeriesView()
+			AddHandler chartControl1.BoundDataChanged, AddressOf ChartControl1_BoundDataChanged
 		End Sub
 
-		Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
-			chartControl1.Series.Clear()
-
-			Dim s1, s2, s3 As Series
-
-			s1 = New Series("Serie1", ViewType.StackedBar)
-			s2 = New Series("Serie2", ViewType.StackedBar)
-			s3 = New Series("Serie3", ViewType.StackedBar)
-			s1.ArgumentScaleType = ScaleType.Qualitative
-			s2.ArgumentScaleType = ScaleType.Qualitative
-			s3.ArgumentScaleType = ScaleType.Qualitative
-
-
-			chartControl1.Series.AddRange(New Series() { s1, s2, s3 })
-			Dim axisX = CType(chartControl1.Diagram, XYDiagram).AxisX
-			axisX.QualitativeScaleComparer = New TotalScaleValuesComparer(chartControl1)
-			axisX.Reverse = True
-
-			Dim r As New Random()
-			For i As Integer = 0 To 9
-				s1.Points.Add(New SeriesPoint(i, Math.Round(r.NextDouble() * 100)))
-				s2.Points.Add(New SeriesPoint(i, Math.Round(r.NextDouble() * 100)))
-				s3.Points.Add(New SeriesPoint(i, Math.Round(r.NextDouble() * 100)))
-			Next i
-		End Sub
-	End Class
-
-	Public Class TotalScaleValuesComparer
-		Implements IComparer
-
-		Private chart As ChartControl
-		Public Sub New(ByVal chart As ChartControl)
-			Me.chart = chart
-		End Sub
-		Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements IComparer.Compare
-			Return GetTotalByArg(x).CompareTo(GetTotalByArg(y))
+		Private Function CreateDataSource() As List(Of DataPoint)
+			Dim dataSource = New List(Of DataPoint)()
+			Dim random As New Random(1)
+			For seriesIndex As Integer = 0 To SeriesNumber - 1
+				For argumentIndex As Integer = 0 To ArgumentNumber - 1
+					Dim dataPoint As New DataPoint() With {
+						.Series = "Series " & seriesIndex,
+						.Argument = "Argument " & argumentIndex,
+						.Value = random.Next(1, 10)
+					}
+					dataSource.Add(dataPoint)
+				Next argumentIndex
+			Next seriesIndex
+			Return dataSource
 		End Function
-
+		Private Sub ChartControl1_BoundDataChanged(ByVal sender As Object, ByVal e As EventArgs)
+			Dim series As Series = chartControl1.Series(0)
+			Dim argTotalDict = New Dictionary(Of String, Double)()
+			For i As Integer = 0 To ArgumentNumber - 1
+				Dim argument As String = series.Points(i).Argument
+				Dim total As Double = GetTotalByArg(argument)
+				argTotalDict.Add(argument, total)
+			Next i
+			Dim axisX As AxisX = CType(chartControl1.Diagram, XYDiagram).AxisX
+			axisX.QualitativeScaleComparer = New ArgumentByTotalComparer(argTotalDict)
+		End Sub
 		Private Function GetTotalByArg(ByVal arg As Object) As Double
 			Dim total As Double = 0
-			For Each series As Series In chart.Series
+			For Each series As Series In chartControl1.Series
 				For Each point As SeriesPoint In series.Points
-					If Object.Equals(point.Argument, arg) Then
+					If Equals(point.Argument, arg) Then
 						total += point.Values(0)
 					End If
 				Next point
@@ -69,4 +61,22 @@ Namespace ChartStackedSorting
 		End Function
 	End Class
 
+	Public Class DataPoint
+		Public Property Series() As String
+		Public Property Argument() As String
+		Public Property Value() As Double
+	End Class
+
+	Friend Class ArgumentByTotalComparer
+		Implements IComparer
+
+		Private argTotalDict As Dictionary(Of String, Double)
+
+		Public Sub New(ByVal argTotalDict As Dictionary(Of String, Double))
+			Me.argTotalDict = argTotalDict
+		End Sub
+		Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements IComparer.Compare
+			Return argTotalDict(DirectCast(x, String)).CompareTo(argTotalDict(DirectCast(y, String)))
+		End Function
+	End Class
 End Namespace
