@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SortStackedBarsByTotalValue;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
