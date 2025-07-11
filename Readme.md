@@ -4,18 +4,18 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-<!-- default file list -->
-*Files to look at*:
+
+# Chart for WinForms - Sort Stacked Bars by Total Values using QualitativeScaleComparer
+
+This example mplements a custom [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) that iterates through all chart points to calculate totals of the stacked bars and sort arguments based on this data. 
+
+## Files to Review
 
 * [Form1.cs](./CS/Form1.cs) (VB: [Form1.vb](./VB/Form1.vb))
-<!-- default file list end -->
-# How to sort stacked bars by total values using QualitativeScaleComparer
 
+## Docuemntation
 
-This example demonstrates how to implement a custom <a href="https://documentation.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer.property">QualitativeScaleComparer</a> that allows iterating through all chart points to calculate totals of the stacked bars and sort arguments based on this data. 
-
-<br/>
-
+* [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)
 
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
