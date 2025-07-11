@@ -7,7 +7,7 @@
 
 # Chart for WinForms - Sort Stacked Bars by Total Values using QualitativeScaleComparer
 
-This example mplements a custom [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) that iterates through all chart points to calculate totals of the stacked bars and sort arguments based on this data. 
+This example implements a custom [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) that iterates through all chart points to calculate totals of the stacked bars and sort arguments based on this data. 
 
 ## Files to Review
 
