@@ -16,6 +16,7 @@ This example implements a custom [QualitativeScaleComparer](https://docs.devexp
 ## Docuemntation
 
 * [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)
+* [Charts - Sorting Data](https://docs.devexpress.com/WindowsForms/6173/controls-and-libraries/chart-control/data-representation/sorting-data)
 
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
