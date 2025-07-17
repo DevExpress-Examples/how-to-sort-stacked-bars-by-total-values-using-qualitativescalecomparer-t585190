@@ -21,7 +21,7 @@ This example implements a custom [QualitativeScaleComparer](https://docs.devexp
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
 
-[<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=how-to-sort-stacked-bars-by-total-values-using-qualitativescalecomparer-t585190&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=how-to-sort-stacked-bars-by-total-values-using-qualitativescalecomparer-t585190&~~~was_helpful=no)
+[<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=winforms-charts-sort-stacked-bars-by-total-values-with-qualitativescalecomparer&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=winforms-charts-sort-stacked-bars-by-total-values-with-qualitativescalecomparer&~~~was_helpful=no)
 
 (you will be redirected to DevExpress.com to submit your response)
 <!-- feedback end -->
