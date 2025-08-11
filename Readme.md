@@ -6,15 +6,15 @@
 
 # Chart for WinForms - Sort Stacked Bars by Total Values using QualitativeScaleComparer
 
-The qualitative axis scale allows you to handle series where arguments are string categories. Qualitative values do not have inherent numeric order. The default sorting method for such scales is alphabetical. 
+The qualitative axis scale allows you to handle series where arguments are string categories. Qualitative values do not have inherent numeric order. The qualitative values are plotted in the same order as series points in the collection.
 
-You can use [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) to sort string values in a custom order (not alphabetically) and prioritize values with a custom comparison logic.
+You can use [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) to sort string values in a custom order and prioritize values with a custom comparison logic.
 
 This example contains a chart where its X-axis displays qualitive values like *Argument 1*, *Argument 2*, etc.
 
 ![Chart - Default sorting](image/chart-unsorted.png)
 
-To implement custom sorting, handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. In the event handler, define a custom `ArgumentByTotalComparer` (based on [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). It sorts chart arguments based on the total value of their stacked bars. The comparer calculates the sum for each category by iterating through all series points, then assigns this comparer to the chart's qualitative axis. As a result, the chart displays categories ordered by their total values, not alphabetically.
+To implement custom sorting, handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. In the event handler, define a custom `ArgumentByTotalComparer` (based on [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). It sorts chart arguments based on the total value of their stacked bars. The comparer calculates the sum for each category by iterating through all series points, then assigns this comparer to the chart's qualitative axis. As a result, the chart displays categories ordered by their total values.
 
 ![Chart - Sorted X-axis by totals](image/chart-sorted.png)
 
