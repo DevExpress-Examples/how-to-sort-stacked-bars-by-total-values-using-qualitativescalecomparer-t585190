@@ -6,17 +6,21 @@
 
 # Chart for WinForms - Sort Stacked Bars by Total Values using QualitativeScaleComparer
 
-The qualitative axis scale allows you to handle series where arguments are string categories. Qualitative values do not have inherent numeric order. The qualitative values are plotted in the same order as series points in the collection.
+The example sorts X-axis data by totals in a WinForms Chart.
 
-You can use [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) to sort string values in a custom order and prioritize values with a custom comparison logic.
+In this example, X-axis displays qualitative values. These values do not have inherent numeric order, they are plotted in the same order as series points in the collection. The example assigns a custom comparer to the `AxisBase.QualitativeScaleComparer` property to sort string values in a custom order. The comparer calculates the total value for each stacked bar and sorts arguments by aggregated values.
 
-This example contains a chart where its X-axis displays qualitive values like *Argument 1*, *Argument 2*, etc.
+## Implementation Details
+
+This example binds the `ChartControl` to a data source created in code. It generated three series, each with ten arguments and random values.
 
 ![Chart - Default sorting](image/chart-unsorted.png)
 
-To implement custom sorting, handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. In the event handler, define a custom `ArgumentByTotalComparer` (based on [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). It sorts chart arguments based on the total value of their stacked bars. The comparer calculates the sum for each category by iterating through all series points, then assigns this comparer to the chart's qualitative axis. As a result, the chart displays categories ordered by their total values.
+### Create a Custom Comparer
 
-![Chart - Sorted X-axis by totals](image/chart-sorted.png)
+To sort X-axis by series totals, start by creating a custom `ArgumentByTotalComparer` class. This class should implement the [IComparer](https://learn.microsoft.com/en-us/dotnet/api/system.collections.icomparer) interface.
+
+The comparer sorts arguments based on their total values stored in a dictionary:
 
 ```cs
 class ArgumentByTotalComparer : IComparer {
@@ -29,7 +33,33 @@ class ArgumentByTotalComparer : IComparer {
         return argTotalDict[(string)x].CompareTo(argTotalDict[(string)y]);
     }
 }
+```
 
+### Calculate Totals for Stacked Bars
+
+The `GetTotalByArg` custom method calculates the sum (the total) for each category by iterating through all series points.
+
+```cs
+double GetTotalByArg(object arg) {
+    double total = 0;
+    foreach (Series series in chartControl1.Series)
+        foreach (SeriesPoint point in series.Points)
+            if (Equals(point.Argument, arg))
+                total += point.Values[0];
+    return total;
+}
+```
+
+
+### Assign the Custom Comparer to the Chart's X-Axis
+
+Handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. This event fired after the chart finishes binding to the data source and generates series points. In the event handler you can calculate totals and other aggregations based on the already-loaded chart data.
+
+Create a new dictionary with totals based on the chart values. For this, call the created `GetTotalByArg` method for each argument from the series point. Pass the created dictionary as a parameter for the `ArgumentByTotalComparer`. Assign this comparer to the chart's qualitative axis ([AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). As a result, the chart displays categories ordered by their total values.
+
+![Chart - Sorted X-axis by totals](image/chart-sorted.png)
+
+```cs
 public partial class Form1 : Form {
     // ...
     void ChartControl1_BoundDataChanged(object sender, EventArgs e) {
@@ -43,57 +73,8 @@ public partial class Form1 : Form {
         AxisX axisX = ((XYDiagram)chartControl1.Diagram).AxisX;
         axisX.QualitativeScaleComparer = new ArgumentByTotalComparer(argTotalDict);
     }
-    double GetTotalByArg(object arg) {
-        double total = 0;
-        foreach (Series series in chartControl1.Series)
-            foreach (SeriesPoint point in series.Points)
-                if (Equals(point.Argument, arg))
-                    total += point.Values[0];
-        return total;
-    }
+
 }
-```
-
-```vb
-Friend Class ArgumentByTotalComparer
-    Implements IComparer
-
-    Private argTotalDict As Dictionary(Of String, Double)
-
-    Public Sub New(ByVal argTotalDict As Dictionary(Of String, Double))
-        Me.argTotalDict = argTotalDict
-    End Sub
-    Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements IComparer.Compare
-        Return argTotalDict(DirectCast(x, String)).CompareTo(argTotalDict(DirectCast(y, String)))
-    End Function
-End Class
-
-Partial Public Class Form1
-    Inherits Form
-    ' ...
-    Private Sub ChartControl1_BoundDataChanged(ByVal sender As Object, ByVal e As EventArgs)
-        Dim series As Series = chartControl1.Series(0)
-        Dim argTotalDict = New Dictionary(Of String, Double)()
-        For i As Integer = 0 To ArgumentNumber - 1
-            Dim argument As String = series.Points(i).Argument
-            Dim total As Double = GetTotalByArg(argument)
-            argTotalDict.Add(argument, total)
-        Next i
-        Dim axisX As AxisX = CType(chartControl1.Diagram, XYDiagram).AxisX
-        axisX.QualitativeScaleComparer = New ArgumentByTotalComparer(argTotalDict)
-    End Sub
-    Private Function GetTotalByArg(ByVal arg As Object) As Double
-        Dim total As Double = 0
-        For Each series As Series In chartControl1.Series
-            For Each point As SeriesPoint In series.Points
-                If Equals(point.Argument, arg) Then
-                    total += point.Values(0)
-                End If
-            Next point
-        Next series
-        Return total
-    End Function
-End Class
 ```
 
 ## Files to Review
