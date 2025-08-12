@@ -8,7 +8,7 @@
 
 The example sorts X-axis data by totals in a WinForms Chart.
 
-In this example, X-axis displays qualitative values. These values do not have inherent numeric order, they are plotted in the same order as series points in the collection. The example assigns a custom comparer to the `AxisBase.QualitativeScaleComparer` property to sort string values in a custom order. The comparer calculates the total value for each stacked bar and sorts arguments by aggregated values.
+In this example, X-axis displays qualitative values. These values do not have inherent numeric order, they are plotted in the same order as series points in the collection. The example assigns a custom comparer to the [AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) property to sort string values in a custom order: the comparer calculates the total value for each stacked bar and sorts arguments by aggregated values.
 
 ## Implementation Details
 
@@ -83,7 +83,7 @@ public partial class Form1 : Form {
 
 ## Documentation
 
-* [QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)
+* [AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)
 * [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged)
 * [Charts - Sorting Data](https://docs.devexpress.com/WindowsForms/6173/controls-and-libraries/chart-control/data-representation/sorting-data)
 * [Reorder Qualitative Axis Values](https://docs.devexpress.com/WindowsForms/5799/controls-and-libraries/chart-control/axes/axis-scale-types#reorder-qualitative-axis-values)
