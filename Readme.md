@@ -18,7 +18,7 @@ This example binds the `ChartControl` to a data source created in code. It gener
 
 ### Create a Custom Comparer
 
-To sort X-axis by series totals, start by creating a custom `ArgumentByTotalComparer` class. This class should implement the [IComparer](https://learn.microsoft.com/en-us/dotnet/api/system.collections.icomparer) interface.
+To sort stacked bars by their aggregate values (totals), start by creating a `ArgumentByTotalComparer` class. This class implements the [IComparer](https://learn.microsoft.com/en-us/dotnet/api/system.collections.icomparer) interface.
 
 The comparer sorts arguments based on their total values stored in a dictionary:
 
@@ -53,9 +53,15 @@ double GetTotalByArg(object arg) {
 
 ### Assign the Custom Comparer to the Chart's X-Axis
 
-Handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. This event fired after the chart finishes binding to the data source and generates series points. In the event handler you can calculate totals and other aggregations based on the already-loaded chart data.
+Handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. This event fired after the chart is bound to the data source and generates series points. In the event handler you can calculate totals and other aggregations based on the loaded chart data.
 
-Create a new dictionary with totals based on the chart values. For this, call the created `GetTotalByArg` method for each argument from the series point. Pass the created dictionary as a parameter for the `ArgumentByTotalComparer`. Assign this comparer to the chart's qualitative axis ([AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). As a result, the chart displays categories ordered by their total values.
+In the event handler, do the following:
+
+- Call the `GetTotalByArg` method for each argument from the series point to create a new dictionary with totals based on chart values.
+- Pass the created dictionary as a parameter for the `ArgumentByTotalComparer` constructor. 
+- Assign the comparer to the chart's qualitative axis ([AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). 
+ 
+As a result, the chart displays categories ordered by their total values.
 
 ![Chart - Sorted X-axis by totals](image/chart-sorted.png)
 
