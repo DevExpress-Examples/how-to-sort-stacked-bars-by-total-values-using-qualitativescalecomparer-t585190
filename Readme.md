@@ -4,7 +4,7 @@
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
 
-# Chart for WinForms - Sort Stacked Bars by Total Values using QualitativeScaleComparer
+# WinForms Chart - Sort Stacked Bars by Total Values using QualitativeScaleComparer
 
 The example sorts X-axis data by totals in a WinForms Chart.
 
