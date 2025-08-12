@@ -60,10 +60,6 @@ In the event handler, do the following:
 - Call the `GetTotalByArg` method for each argument from the series point to create a new dictionary with totals based on chart values.
 - Pass the created dictionary as a parameter for the `ArgumentByTotalComparer` constructor. 
 - Assign the comparer to the chart's qualitative axis ([AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer)). 
- 
-As a result, the chart displays categories ordered by their total values.
-
-![Chart - Sorted X-axis by totals](image/chart-sorted.png)
 
 ```cs
 public partial class Form1 : Form {
@@ -82,6 +78,10 @@ public partial class Form1 : Form {
 
 }
 ```
+
+As a result, the chart displays categories ordered by their total values.
+
+![Chart - Sorted X-axis by totals](image/chart-sorted.png)
 
 ## Files to Review
 
