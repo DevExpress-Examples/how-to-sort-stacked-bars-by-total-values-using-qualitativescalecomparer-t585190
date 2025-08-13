@@ -18,7 +18,9 @@ Namespace SortStackedBarsByTotalValue
 			Dim seriesTemplate As SeriesTemplate = chartControl1.SeriesTemplate
 			seriesTemplate.ArgumentDataMember = "Argument"
 			seriesTemplate.ValueDataMembers.AddRange("Value")
-			seriesTemplate.View = New StackedBarSeriesView()
+			Dim stackedBarSeriesView = New StackedBarSeriesView()
+			seriesTemplate.View = stackedBarSeriesView
+			stackedBarSeriesView.Pane.StackedBarTotalLabel.Visible = True
 			AddHandler chartControl1.BoundDataChanged, AddressOf ChartControl1_BoundDataChanged
 		End Sub
 
