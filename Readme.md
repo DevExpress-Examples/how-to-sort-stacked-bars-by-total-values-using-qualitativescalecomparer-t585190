@@ -8,13 +8,15 @@
 
 The example sorts X-axis data by totals in a WinForms Chart.
 
-In this example, X-axis displays qualitative values. These values do not have inherent numeric order, they are plotted in the same order as series points in the collection. The example assigns a custom comparer to the [AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) property to sort string values in a custom order: the comparer calculates the total value for each stacked bar and sorts stacked bars by aggregated values.    
+In this example, the X-axis displays qualitative values. These values do not have an inherent numeric order - they are plotted in the same order as series points in the collection. The example assigns a custom comparer to the [AxisBase.QualitativeScaleComparer](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraCharts.AxisBase.QualitativeScaleComparer) property to sort string values in a custom order: the comparer calculates the total value for each stacked bar and sorts stacked bars by aggregated values.    
+
 
 ![Chart - Sorted X-axis by totals](image/chart-sorted.png)
 
 ## Implementation Details
 
-This example binds the `ChartControl` to a data source created in code. It generated three series, each with ten arguments and random values. To sort stacked bars by their aggregate values (totals), do the following steps.
+This example binds the `ChartControl` to a data source created in code. It generates three series, each with ten arguments and random values. To sort stacked bars by their aggregate values (totals), do the following:
+
 
 ### Create a Comparer
 
@@ -51,7 +53,8 @@ double GetTotalByArg(object arg) {
 
 ### Sort Stacked Bars by Totals
 
-Handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. This event fired after the chart is bound to the data source and generates series points. In the event handler you can calculate totals and other aggregations based on the loaded chart data.
+Handle the [ChartControl.BoundDataChanged](https://docs.devexpress.com/WindowsForms/DevExpress.XtraCharts.ChartControl.BoundDataChanged) event. This event fires after the chart is bound to the data source and generates series points. In the event handler, you can calculate totals and other aggregations based on the loaded chart data.
+
 
 In the event handler, do the following:
 
